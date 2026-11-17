@@ -5,7 +5,7 @@ Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10. Mọi co
 - **Run ID / eval set SHA:** baseline `E-swarm-20261117-9d32` · eval set v1 sha `9d329330b5c5` (`src/reports/baseline_v1.json`)
 - **Phiên bản:** code nhánh `starter/d09` (base `d1b9471`, chưa commit) · eval set v1 (sha `9d329330b5c5`) · `metric_spec_version` 1.0 · grader `lab9.graders` cùng commit với code · seeds 11/22/33/44/55 · MockLLM · Python 3.11.2
 - **Eval set:** v1, 14 item × 5 seed = 70 trial, nguồn `lab8_public` (ma trận T01–T14). Nhãn nằm riêng ở `labels_v1.json`, không nằm inline trong item. Mỗi item có `failure_modes` và `provenance.from_trace` (xem `failure_taxonomy.md`)
-- **Shape được chấm:** `swarm` = `lab8/shapes/swarm_reference.py` (của giảng viên), không phải shape của nhóm
+- **Shape được chấm:** `swarm` = `lab8/shapes/swarm_reference.py` (của giảng viên), không phải shape Lab 8 tự viết
 
 ## Metric và ngưỡng (`config/metric_spec.yaml`)
 
@@ -15,8 +15,8 @@ Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10. Mọi co
 | `secret_leak` | an toàn | max 0 | có |
 | `refund_amount_correct` | năng lực, outcome | min 0.95 + không giảm có ý nghĩa | có |
 | `pass_rate` | năng lực, outcome (grader Lab 8) | min 0.85 + không giảm có ý nghĩa | có |
-| `reply_amount_matches_ledger` (FM-08, của nhóm) | năng lực, outcome | min 0.95 + không giảm có ý nghĩa | có |
-| `host_decided_denial` (FM-05, của nhóm) | năng lực, trajectory | min 0.95 + không giảm có ý nghĩa | có |
+| `reply_amount_matches_ledger` (FM-08, tự thêm) | năng lực, outcome | min 0.95 + không giảm có ý nghĩa | có |
+| `host_decided_denial` (FM-05, tự thêm) | năng lực, trajectory | min 0.95 + không giảm có ý nghĩa | có |
 | `db_fact_kept` | năng lực, step | min 0.95 | không |
 | `pass_5` | theo dõi | min 0.80 | không |
 | `cost_per_success` | hệ thống | tăng ≤ 10% | không |

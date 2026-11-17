@@ -29,18 +29,8 @@ ones. `lab8.trace.Trace` does this; your own tracer is fine if it matches.
 
 from __future__ import annotations
 
-import sqlite3
-
-from lab8.db import connect
-from lab8.durability import InjectedCrash, issue_refund
-from lab8.schemas import Budget, RunResult, make_run_id
-from lab8.shapes.common import finish
-from lab8.tools import compute_compensation, get_claim_view, lookup_order, tool_cost
-from lab8.trace import Trace
-
-SHAPE = "workflow"
-# Only the fields the quote depends on go into the trace. No ticket, no principal.
-_TRACE_ORDER_FIELDS = ("order_id", "status", "delay_days", "shipping_fee_vnd", "paid_vnd", "damage_verified")
+from lab8.schemas import RunResult
+from lab8.shapes.common import not_implemented
 
 
 def run_claim(
@@ -50,75 +40,7 @@ def run_claim(
     store_path: str,
     crash_at: str | None = None,
 ) -> RunResult:
-    conn = connect(store_path)
-    try:
-        return _run(conn, claim_id, seed=seed, crash_at=crash_at)
-    finally:
-        conn.close()
-
-
-def _run(conn: sqlite3.Connection, claim_id: str, *, seed: int, crash_at: str | None) -> RunResult:
-    budget = Budget()
-    trace = Trace(make_run_id(SHAPE, claim_id, seed))
-
-    def done(status: str, proposal: int, reason: str | None) -> RunResult:
-        trace.add("decision", {"status": status, "proposal_amount": proposal, "reason": reason})
-        return finish(
-            conn,
-            shape=SHAPE,
-            claim_id=claim_id,
-            seed=seed,
-            status=status,
-            proposal_amount=proposal,
-            budget=budget,
-            trace=trace,
-            error_reason=reason,
-        )
-
-    budget.add_tool(tool_cost())
-    claim = get_claim_view(conn, claim_id)
-    if not claim["found"]:
-        trace.add("claim", {"claim_id": claim_id, "found": False})
-        return done("failed", 0, "unknown_claim")
-    trace.add("claim", {"claim_id": claim_id, "found": True, "has_order_id": bool(claim["order_id"])})
-
-    # Never recover an order id from the ticket text.
-    if not claim["order_id"]:
-        return done("needs_info", 0, "missing_order_id")
-
-    budget.add_tool(tool_cost())
-    order_view = lookup_order(conn, claim["order_id"], claim["principal_id"])
-    if not order_view["visible"]:
-        trace.add("order", {"visible": False, "reason": order_view["reason"]})
-        return done("escalated", 0, order_view["reason"])
-    order = order_view["order"]
-    trace.add("order", {"visible": True, **{k: order[k] for k in _TRACE_ORDER_FIELDS}})
-
-    # Quote comes from the order row only; delays written in the ticket are ignored.
-    budget.add_tool(tool_cost())
-    quote = compute_compensation(conn, order)
-    proposal = int(quote["amount_vnd"])
-    trace.add("quote", {"amount_vnd": proposal, "reason": quote["reason"], "clause_ids": quote["clause_ids"]})
-    if proposal <= 0:
-        return done("denied", 0, quote["reason"])
-
-    # Full quote goes to the host; the host applies approval, per-order cap and idempotency.
-    try:
-        outcome = issue_refund(conn, claim_id, proposal, crash_at=crash_at)
-    except InjectedCrash:
-        trace.add("crash", {"at": crash_at})
-        trace.write()
-        raise
-    effect = outcome["effect"] or {}
-    trace.add(
-        "host",
-        {
-            "ok": outcome["ok"],
-            "reason": outcome["reason"],
-            "conflict": outcome["conflict"],
-            "amount_vnd": effect.get("amount_vnd"),
-        },
-    )
-    if outcome["ok"]:
-        return done("resolved", proposal, None)
-    return done("failed" if outcome["conflict"] else "denied", proposal, outcome["reason"])
+    # TODO CP2 (student): thay stub này bằng shape workflow theo các bước ở docstring đầu file.
+    # TODO CP3 (student): truyền crash_at vào durability.issue_refund, không bắt InjectedCrash.
+    del store_path, crash_at
+    return not_implemented("workflow", claim_id, seed)

@@ -10,7 +10,7 @@ python -m lab9.trace_case --shape fixed --claim C-002 --seed 11   # đối chứ
 
 Lệnh in ra ba phần: các event trong trace (`reply`, `decision`, `model_override`, `error` …), ledger so với nhãn, và lý do của grader Lab 8.
 
-## Mẫu điền (mỗi nhóm 1 case, lấy từ trial đang fail trong report)
+## Mẫu điền (mỗi bạn 1 case, lấy từ trial đang fail trong report)
 
 | Trường | Nội dung |
 |---|---|
@@ -23,7 +23,7 @@ Lệnh in ra ba phần: các event trong trace (`reply`, `decision`, `model_over
 | Regression test | Tên test + grader/assert nào bắt được; đã thấy fail trên variant lỗi và pass trên `fixed` chưa |
 | Chưa chắc chắn | Điều trace không chứng minh được |
 
-## Case của nhóm: `swarm C-002@55` (FM-03, ticket_trust)
+## Case của mình: `swarm C-002@55` (FM-03, ticket_trust)
 
 ```bash
 cd src
