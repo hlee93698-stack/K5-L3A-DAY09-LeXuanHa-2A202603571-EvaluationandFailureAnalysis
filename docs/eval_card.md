@@ -2,8 +2,8 @@
 
 Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10. Mọi con số dưới đây lấy từ report do `lab9.eval` sinh ra (dẫn run ID), không gõ tay.
 
-- **Run ID / eval set SHA:** baseline `E-swarm-20261117-9d32` · eval set v1 sha `9d329330b5c5` (`src/reports/baseline_v1.json`)
-- **Phiên bản:** code nhánh `starter/d09` (base `d1b9471`, chưa commit) · eval set v1 (sha `9d329330b5c5`) · `metric_spec_version` 1.0 · grader `lab9.graders` cùng commit với code · seeds 11/22/33/44/55 · MockLLM · Python 3.11.2
+- **Run ID / eval set SHA:** baseline `E-swarm-20261117-5aed` · eval set v1 sha `5aede871ee2b` (`src/reports/baseline_v1.json`)
+- **Phiên bản:** code nhánh `starter/d09` (fork cá nhân, base starter `7cc3250`) · eval set v1 (sha `5aede871ee2b`) · `metric_spec_version` 1.0 · grader `lab9.graders` cùng commit với code · seeds 11/22/33/44/55 · MockLLM · Python 3.11.2
 - **Eval set:** v1, 14 item × 5 seed = 70 trial, nguồn `lab8_public` (ma trận T01–T14). Nhãn nằm riêng ở `labels_v1.json`, không nằm inline trong item. Mỗi item có `failure_modes` và `provenance.from_trace` (xem `failure_taxonomy.md`)
 - **Shape được chấm:** `swarm` = `lab8/shapes/swarm_reference.py` (của giảng viên), không phải shape Lab 8 tự viết
 
@@ -25,7 +25,7 @@ Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10. Mọi co
 
 ## Kết quả baseline vs PR (v1)
 
-| Metric | baseline `E-swarm-20261117-9d32` | `fixed` `E-fixed-20261117-9d32` | `seeded_regression` `E-seeded_regression-20261117-9d32` |
+| Metric | baseline `E-swarm-20261117-5aed` | `fixed` `E-fixed-20261117-5aed` | `seeded_regression` `E-seeded_regression-20261117-5aed` |
 |---|---|---|---|
 | approval_bypass | 0 | 0 | 0 |
 | secret_leak | 0 | 0 | 0 |
@@ -79,7 +79,7 @@ Khi thêm hoặc bớt item (ví dụ item mới từ trace case với `provenan
 
 ## v2: Advanced / Expert (M5–M7)
 
-- **Run ID:** baseline `E-swarm-20261117-b21b` · eval set v2 sha `b21bce053670` (`src/reports/baseline_v2.json`) · `metric_spec_version` 2.0
+- **Run ID:** baseline `E-swarm-20261117-c9a3` · eval set v2 sha `c9a39dd767d5` (`src/reports/baseline_v2.json`) · `metric_spec_version` 2.0
 - **Eval set v2:** 28 item = 14 item v1 + 14 item adversarial (`adversarial_v2.json`). Cơ chế tấn công được map sang FM qua `config/fm_map.yaml`. Mỗi FM bị tấn công có ≥3 item: FM-02 4, FM-03 4, FM-04 7, FM-05 5, FM-06 3, FM-07 5, FM-08 4, FM-09 4. `evalset --v2`: 0 problem.
 - **Slice** (tag lấy từ nhãn, không lấy từ output của agent): `money_movement` 12 item, `adversarial` 14, `denial` 11, `escalation` 4.
 

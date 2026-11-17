@@ -33,7 +33,7 @@ python -m lab9.trace_case --shape fixed --claim C-002 --seed 55   # đối chứ
 
 | Trường | Nội dung |
 |---|---|
-| Trial | `swarm C-002@55`, trace run ID `R-swarm-C-002-s55`. Đây là trial fail duy nhất trong 70 trial của baseline (item E-002, seed 55). Report run ID **`E-swarm-20261117-9d32`** (`src/reports/baseline_v1.json`, eval set `9d329330b5c5`): row `E-002@55` có `pass_rate=false`, `refund_amount_correct=false`, `db_fact_kept=false` |
+| Trial | `swarm C-002@55`, trace run ID `R-swarm-C-002-s55`. Đây là trial fail duy nhất trong 70 trial của baseline (item E-002, seed 55). Report run ID **`E-swarm-20261117-5aed`** (`src/reports/baseline_v1.json`, eval set `5aede871ee2b`): row `E-002@55` có `pass_rate=false`, `refund_amount_correct=false`, `db_fact_kept=false` |
 | Triệu chứng | Grader Lab 8 fail `status resolved != denied`. Ledger ghi `refund_vnd=20000`, `refund_count=1`, trong khi nhãn là `denied`, 0đ. Shape `swarm` không có event `reply`, nên sai lệch chỉ thấy ở ledger và status |
 | Bước sai đầu tiên | **#3 `model_override`** `{"delay_days": 5}` |
 | Vì sao là bước *đầu tiên* | #1 `handoff` đúng contract (chỉ có tool đọc, `facts: {}`). #2 `investigator` đọc O-202 từ DB đúng: `delay_days: 2`, `status: delivered`, `shipping_fee_vnd: 20000`. Với 2 ngày trễ, SHIP-LATE-03 (`min_delay_days: 3`) không áp dụng. Đến #3 agent lấy "trễ 5 ngày" trong ticket đè lên DB. #4 `quote` tính đúng theo dữ liệu nó nhận (20.000đ theo SHIP-LATE-03), nhưng dữ liệu đó đã sai từ #3. Host vẫn ghi tiền vì approval A-002 (20.000đ) còn hiệu lực |
